@@ -20,11 +20,11 @@ import scanf msvcrt.dll
 ; our data is declared here (the variables needed by our program)
 segment data use32 class=data
     mode_access db 'w', 0
-    file_name db '10.txt', 0
+    file_name times 30 db 0
     file_descriptor dd -1
 
     ; read_format db '%[^”,10,”]%s', 0
-    read_format db '%[^\n]%s', 0
+    read_format db '%s', 0
     text resb 120
 
     print_format db '%s', 0
@@ -33,6 +33,10 @@ segment data use32 class=data
 segment code use32 class=code
     start:
 
+		push dword file_name
+		push dword read_format
+		call [scanf]
+		add esp, 4 * 2
         ; open the file
         push dword mode_access
         push dword file_name
