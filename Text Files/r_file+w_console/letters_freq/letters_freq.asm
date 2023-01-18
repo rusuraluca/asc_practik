@@ -48,8 +48,7 @@ segment code use32 class=code
 
     ; read the file byte by byte
     read_loop:
-
-			; fread(char, step, len, file)
+			; fread(char, step = 1, len = 1, file)
       push dword [file_descriptor]
       push dword 1
       push dword 1
@@ -64,6 +63,7 @@ segment code use32 class=code
       mov al, byte [char]
       cmp byte [char], 'z'
       jne not_z
+      
       ; if we enter here, it means the character is z
       inc dword [z_freq]
       jmp read_loop ; we read again
