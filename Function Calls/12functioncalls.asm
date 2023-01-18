@@ -1,4 +1,3 @@
-; The code below will print message ”n=”, then will read from keyboard the value of perameter n.
 bits 32
 
 global start        
@@ -13,8 +12,8 @@ segment data use32 class=data
 	n db 0       ; in this variable we'll store the value read from the keyboard
     ; char strings are of type byte
 	message  db "n=", 0  ; char strings for C functions must terminate with 0(value, not char)
-	messageprint  db "%x in base 10 is %d", 0  ; char strings for C functions must terminate with 0(value, not char)
-	formathexa  db "%x", 0  ; %d <=> a decimal number (base 10)
+	messageprint  db "n = %d in base 10 and n = %X in base 16", 0  ; char strings for C functions must terminate with 0(value, not char)
+	formathexa  db "%d", 0  ; %d <=> a decimal number (base 10)
 	
 segment code use32 class=code
     start:
@@ -23,7 +22,7 @@ segment code use32 class=code
         ; place parameters on stack
         push dword message ; ! on the stack is placed the address of the string, not its value
         call [printf]      ; call function printf for printing 
-        add esp, 4*1       ; free parameters on the stack; 4 = size of dword; 1 = number of parameters
+        add esp, 4 * 1       ; free parameters on the stack; 4 = size of dword; 1 = number of parameters
                                                    
         ; will call scanf(format, n) => will read a number in variable n
         ; place parameters on stack from right to left
@@ -40,7 +39,7 @@ segment code use32 class=code
 		push dword messageprint
         ;push dword messageprint ; ! on the stack is placed the address of the string, not its value
         call [printf]      ; call function printf for printing
-        add esp, 4*3      ; free parameters on the stack; 4 = size of dword; 1 = number of parameters
+        add esp, 4 * 3      ; free parameters on the stack; 4 = size of dword; 1 = number of parameters
                                                   
 		
 		; exit(0)	
